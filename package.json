@@ -1,0 +1,105 @@
+{
+  "name": "dun-dun-dun",
+  "displayName": "Dun dun dun",
+  "description": "Plays a custom sound from media/dundundun.mp3 when an error occurs in the integrated terminal.",
+  "version": "1.0.2",
+  "publisher": "realtanmoydeb",
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tanmoydeb22/Dun-Dun-Dun-Vs-code-Extension.git"
+  },
+  "enabledApiProposals": [
+    "terminalDataWriteEvent"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dunDunDun.enable",
+        "title": "Dun dun dun: Enable",
+        "category": "Dun dun dun"
+      },
+      {
+        "command": "dunDunDun.disable",
+        "title": "Dun dun dun: Disable",
+        "category": "Dun dun dun"
+      },
+      {
+        "command": "dunDunDun.testSound",
+        "title": "Dun dun dun: Test Sound",
+        "category": "Dun dun dun"
+      }
+    ],
+    "configuration": {
+      "title": "Dun dun dun",
+      "properties": {
+        "dunDunDun.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable the Dun dun dun extension globally."
+        },
+        "dunDunDun.soundFile": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to a custom .mp3 or .wav file. Leave blank to use the default dun dun dun sound."
+        },
+        "dunDunDun.volume": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Volume level from 0.0 to 1.0",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "dunDunDun.cooldownMs": {
+          "type": "number",
+          "default": 2000,
+          "description": "Minimum milliseconds between sound plays to prevent spamming."
+        },
+        "dunDunDun.useExitCodeDetection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Listen for non-zero terminal command exit codes to play the sound."
+        },
+        "dunDunDun.usePatternDetection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Listen for raw text patterns like 'error', 'exception', etc. in the terminal output."
+        },
+        "dunDunDun.customPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "error",
+            "failed",
+            "exception",
+            "invalid"
+          ],
+          "description": "Custom keywords or regex strings to scan for in the terminal when pattern detection is enabled."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.93.0",
+    "@types/node": "20.x",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  }
+}
